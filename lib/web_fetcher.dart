@@ -6,7 +6,7 @@ class WebFetcher {
   static Future<http.Response> _getResponse(String page) async {
     return await http.get(Uri.parse(page), headers: {
       "Access-Control-Allow-Origin": "*",
-      'Content-Type': 'application/json',
+      'Access-Control-Allow-Credentials': 'true',
       'Accept': '*/*'
     });
   }
