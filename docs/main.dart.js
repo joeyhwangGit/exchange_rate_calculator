@@ -21645,7 +21645,7 @@ a9S(a){var s=0,r=A.ae(t.Wd),q,p
 var $async$a9S=A.af(function(b,c){if(b===1)return A.ab(c,r)
 while(true)switch(s){case 0:p=t.N
 s=3
-return A.ai(A.aD6(A.z2(a),A.aD(["Access-Control-Allow-Origin","*","Content-Type","application/json","Accept","*/*"],p,p)),$async$a9S)
+return A.ai(A.aD6(A.z2(a),A.aD(["Access-Control-Allow-Origin","*","Access-Control-Allow-Credentials","true","Accept","*/*"],p,p)),$async$a9S)
 case 3:q=c
 s=1
 break
