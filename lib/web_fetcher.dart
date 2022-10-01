@@ -1,18 +1,18 @@
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 class WebFetcher {
   static const _maxTry = 4;
 
-  static Future<http.Response> _getResponse(String page) async {
-    return await http.get(Uri.parse(page), headers: {
-      "Access-Control-Allow-Origin": "*",
+  static Future<Response> _getResponse(String page) async {
+    return await get(Uri.parse(page), headers: {
+      'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': 'true',
-      'Accept': '*/*'
+      'Accept': 'application/json'
     });
   }
 
-  static Future<http.Response> getPage(String page) async {
-    http.Response response;
+  static Future<Response> getPage(String page) async {
+    Response response;
     int nTry = 0;
     do {
       response = await _getResponse(page);
