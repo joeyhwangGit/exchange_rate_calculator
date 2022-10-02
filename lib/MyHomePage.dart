@@ -70,7 +70,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                       child: _getListWidget(rates),
                     ),
-                    _getUpdateButton(),
                     _getInputWidget(rates),
                   ],
                 ),
@@ -100,26 +99,24 @@ class _MyHomePageState extends State<MyHomePage> {
         final formatCurrency = NumberFormat.simpleCurrency(
             decimalDigits: 2,
             locale: ExchangeRate.currencyLocale[rates[index].keys.first]);
-        return Padding(
+        return ListTile(
+          style: ListTileStyle.drawer,
           key: Key('$index'),
-          padding: const EdgeInsets.all(4.0),
-          child: ListTile(
-            tileColor: Colors.grey.shade100,
-            title: Row(
-              children: [
-                Text(rates[index].keys.first),
-                Expanded(
-                  flex: 10,
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(formatCurrency.format(_money /
-                        _selectedCurrencyValue *
-                        rates[index].values.first)),
-                  ),
+          tileColor: index % 2 == 0 ? Colors.white : Colors.grey.shade200,
+          title: Row(
+            children: [
+              Text(rates[index].keys.first),
+              Expanded(
+                flex: 10,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(formatCurrency.format(_money /
+                      _selectedCurrencyValue *
+                      rates[index].values.first)),
                 ),
-                const Spacer(flex: 1),
-              ],
-            ),
+              ),
+              const Spacer(flex: 1),
+            ],
           ),
         );
       },
@@ -135,50 +132,48 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  ElevatedButton _getUpdateButton() {
-    return ElevatedButton(
-      onPressed: () {
-        setState(() {
-          _rates = ExchangeRate.readRate();
-        });
-      },
-      child: const Text('Update currency rate...'),
-    );
-  }
-
-  Row _getInputWidget(List<Map<String, double>> rates) {
-    return Row(
-      children: [
-        DropdownButton(
-          underline: Container(),
-          value: _selectedCurrency,
-          items: rates
-              .map((e) => DropdownMenuItem(
-                  value: e.keys.first, child: Text(e.keys.first)))
-              .toList(),
-          onChanged: (value) {
-            setState(() {
-              _selectedCurrency = value ?? '';
-              _selectedCurrencyValue = _getSelectedCurrencyValue(rates);
-            });
-          },
-        ),
-        Expanded(
-          child: TextFormField(
-              initialValue: _money.toString(),
-              maxLines: 1,
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp(r'[\d\.]'))
-              ],
-              textAlign: TextAlign.right,
-              onChanged: (value) {
-                setState(() {
-                  _money = double.parse(value);
-                });
-              }),
-        ),
-      ],
+  ColoredBox _getInputWidget(List<Map<String, double>> rates) {
+    return ColoredBox(
+      color: Colors.green.shade700,
+      child: Row(
+        children: [
+          DropdownButton(
+            underline: Container(),
+            value: _selectedCurrency,
+            items: rates
+                .map((e) => DropdownMenuItem(
+                    value: e.keys.first,
+                    child: Text(
+                      ' ${e.keys.first}',
+                      style: const TextStyle(color: Colors.white),
+                    )))
+                .toList(),
+            onChanged: (value) {
+              setState(() {
+                _selectedCurrency = value ?? '';
+                _selectedCurrencyValue = _getSelectedCurrencyValue(rates);
+              });
+            },
+          ),
+          Expanded(
+            child: TextFormField(
+                cursorColor: Colors.white,
+                style: const TextStyle(color: Colors.white),
+                initialValue: _money.toString(),
+                maxLines: 1,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'[\d\.]'))
+                ],
+                textAlign: TextAlign.right,
+                onChanged: (value) {
+                  setState(() {
+                    _money = double.parse(value);
+                  });
+                }),
+          ),
+        ],
+      ),
     );
   }
 }
