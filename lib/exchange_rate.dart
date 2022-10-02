@@ -66,7 +66,8 @@ class ExchangeRate {
     "에티오피아 ETB": "am_ET",
     "우즈베키스탄 UZS": "uz_UZ",
   };
-  static const String _webPage = 'http://fx.kebhana.com/FER1101M.web';
+  static const String _webPage =
+      'http://cors.io/?http://fx.kebhana.com/FER1101M.web';
   static const currencyKorea = '대한민국 KRW';
 
   static Future<List<Map<String, double>>> readRate() async {
